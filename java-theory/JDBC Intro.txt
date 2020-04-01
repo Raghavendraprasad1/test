@@ -1,0 +1,161 @@
+JDBC API :- stands for java data base connectivity. this API(library) enables java 
+application to connect to relatonal database. this API provide connectivity with 
+almost all database software such as mysql,oracle,sql server,sqlite and others.
+
+there are three basic jdbc use cases.
+1. Query the database(read data  from it).
+2.update the database(write data to it).
+3. perform transaction.
+
+JDBC API  consist of following 4 component.
+1.JDBC Drivers
+2.connections
+3.Statements
+4.Result sets
+
+JDBC Drivers :
+---------------------
+it is a collection of java classes that enables program to connect certain database.each
+database have their own JDBC Drives provided by their vendors.
+this JDBC Driver need to load into jvm to provide connectivity with database.
+
+Connection :-
+--------------------
+            Once a jdbc driver is loaded and initialized , we need to connect it to database.
+ we can obtain the connection object by providing necessary information about database 
+such as DB location ,DB username and DB password.
+
+Statement :-
+-----------------
+             It is use to execute query and updates against the database.
+
+Result-Set :-
+----------------
+                It is a temporary storage that store values ,retrieve values from database. we 
+can traverse this ResultSet to read result of query.
+
+JDBC API is given in java.sql package.
+
+Java database Connectivity Steps :-
+----------------------------------------------------------
+1. Register the driver class :-   register means to load the driver class into jvm.
+    >> forName() method of class Class is used to load the drivers class into jvm.
+        Class.forName("class-name/byte-code");
+    >> now fom java 6 this step is optional, Driver Manager class automatically find and
+load driver class.
+
+2.  Create Connection(interface) object :-
+                      we can establish connection with database by calling  getConnection()
+       static method of DriverManager class and it return the object of connection. this
+     getConnection() method accept the following paranmeter.
+a) URL :- location of database software
+b) username:- username of database
+c) password of database 
+           Connection con=DriverManager.getConnection(URL,Username,password);
+    
+3. Create Statement(inteface)object :-
+                          createStatement() method of Connection object is used to create 
+                   statement. this Statement object is responsible to  execute queries with
+          database.
+                            Statement s= con.createStatement();
+    >> to execute SQL queries the following method are used.
+        1. executeQuery(SQL query) ;
+         2.executeUpdate(); 
+4. close Connection :-
+      close() method of Connection object is used to terminate the connection with 
+     database .
+                  con.close();
+
+URL :--
+              jdbc:database.provider://ip-address:port no..database-name
+                                                  OR
+              jdbc:mysql://127.0.0.1:3306/database-name   
+
+Update the database :-
+----------------------------------
+             updating database means writing data to it . in other words, adding new records
+       or modifying the existing records. 
+     In order to update the data base we need to use statement object.
+ 
+Query the database :-
+--------------------------------
+                     querying the DB means inserting and retrieving the records . first we need 
+            to create a statement object.
+              Statement s=con.createStatement();
+   call the executeQuery(select query)  method to execute a select query and we get 
+  back a resultSet. the resultSet contain the result of sql query.this result contain 
+  records(row with column of data).
+
+     ResultSet rs=s.executeQuery(select query);
+
+   we can iterate the row of resultset by calling next() method. the next() method of 
+  resultSet move to next row in the result. if there is no row available to move it 
+  return false, otherwise it return true.   
+ 
+    To get column data for the current row , call some of getxxx() method where xxx
+ is a premitive data types.
+        for example :      getString("column name");
+                                getInt("column name");
+      we can also p[as colom index :
+                               getString("column index");
+                                getInt("column index");
+
+>> If we want to know coloumn index ==
+       we can get by calling findColumn("column name") method.
+
+                   int index=findColumn("column name");
+>> When we have done iterating result we can close ResultSet by calling close() method.
+           resultSet.close(); 
+
+BatchUpdate :-
+--------------------
+                A batch update is a batch of update grouped together and sent to database
+         in one batch rather than sending one by one. here fast execution occurs.
+
+>> First we need to create a Statement object then by using addBatch(sql Queries) method
+   add sql statement to be execute in the batch.
+   >> then execute SQL statement using executeBatch() method. 
+>>  This method return integer array  telling how many records are affected by each
+     execution of sql statement in addBatch.
+              Statementobj.addBatch(sql query1);
+             Statementobj.addBatch(sql query2);
+             Statementobj.addBatch(sql query3);
+         int [] rowAffected=Statementobj.executeBatch();
+
+PreparedStatement :- It is a special kind of object with some useful feature. these features 
+  are --
+ a) easy to insert parameter into sql statement.
+b) easy to reuse PreparedStatement object with new parameter.
+c) Increase performance of executed Statement.
+d) Enable easier Batch update.
+e) prevent sql injection.
+        we can get PreparedStatement object by calling  :
+      PreparedStatement ps=con.prepareStatement();
+>> this statement compile sql statement for faster execution.
+>> everywhere we need to insert parameter into sql, we write a question mark(?).
+>> Once a preparedStatement is created we can insert a parameter at location of 
+question mark using setxxx() method.
+                   
+                      setString(index,value);
+                      setInt/long/double(index,value);
+  >> here index is position of ? in sql query, index start with 1.
+>> we can reuse PreparedStatement after execution.we can set new values for the 
+   parameter and then execute it again.
+
+PreparedStatement Batch Update :
+----------------------------------------------------------
+                             first set parameter values in a sql statement ,then add the batch sql 
+             statement to be executed in the batch using addBatch() method. This add 
+     parameter values to batch internally ,we can add another set of parameter value 
+    into sql statement.
+         Finally call executeBatch() method.
+
+callable Statement ;
+------------------------------
+                   it is used to call stored procedure from  a database which is created in 
+        database. A stored procedure is like a function or method ,except it reside inside
+     a database. 
+      To create an instance if CallableStatement, call preparecall() by connectio object.
+            CallableStatement cs=con.preparecall(call query);
+   
+ 

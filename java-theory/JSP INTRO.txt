@@ -1,0 +1,115 @@
+JSP :- (Java Server Pages) is server side technology to create 
+dynamic java web application. It is considered as extension of
+servlet technology. It provides features to easily create web
+applicaiton.
+
+JSP page :- consists of HTML code and provide option to include
+java code for dynamic content. To bridge gap between java code and
+HTML in jsp, it provides additional JSP tags.
+
+Advantage :- We can generate HTML response from servlets also but
+process is error prone and cumbersome, when it comes to writing 
+complex HTML response. JSP helps in this situtation and provide us flexibity 
+to write normal HTML page and include jsp code only where its'
+required.
+
+Life cycle of JSP page
+
+JSP Page is also managed by web container. JSP pages life cycle
+phasesa re:-
+
+a) Translation : JSP page doens't look like normal java classes,
+   actually web container parse JSP page and traslate them to
+   generate corresponsding servlet source code. If JSP file name
+   is home.jsp, usally servlet class source code named as 
+   home_jsp.java.
+
+b) Compilation :- if translation is sucessful, then web container
+   compiles generated servlet source file to generate class file.
+
+c) Class Loading :- Once JSP is compiled as servlet class, its
+   lifecycle is similar to servlet and it gets loaded into 
+   memory.
+
+d) Instance Createion :- web container instantiate Servlet class.
+
+e) Initialization :- init() method call
+
+f) Request Processing :- for every client request, ServletREquest
+   and ServletResponse object is createed and pass to service()
+   method to process and generate HTML resposne.
+
+g) Destroy :- when servlet unloaded from memory.
+
+If we put jsp page inside Web Pages directory, we can acess it
+directly from browser using its name.
+If we also put jsp page inside WEB-INF directory, we wont be able
+to access it directly from  browser.
+
+<servlet>
+   <servlet-name>.....</servlet-name>
+   <jsp-file>........</jsp-file>
+<servlet>
+
+<servlet-mapping>
+   <servlet-name>......</servlet-name>
+   <url-pattern>......</url-pattern>
+</servlet-mapping>
+
+
+JSP Tags:-
+
+a) JSP Comments Tag :- is used to write comments in JSP file.
+
+HTML has also a comment tag :-   <!-- Comments -->
+HTML comments are sent to browser and we can look it with view
+source option of browsers.
+
+We can put comments in JSP files as :-
+
+<%-- Comments --%>
+
+This comment is sutiable for developers to provide code level
+comments because these are not sent to browser.
+
+b) JSP Scriptlets tag
+
+Scriptlet tags are easiest way to put java code in a JSP page. 
+A scriplet tag starts with <% and ends with %>
+
+Any code written inside the scriplet tags go into service() method.
+
+<%   java codes      %>
+
+c) JSP Expression tag
+
+Since most of the times we print dynamic data in JSP page using
+out.print() method, there is a shortcut to do this through
+expression tag. JSP expression stats with <%= and ends with %>
+
+<%= expression %>
+
+Notic that anything between <%=   %> is sent as paramter to 
+out.print() method.
+Also notice that scriptlets can contain multiple java statement
+and always ends with semicolon but expression doesn't end with
+semicolon.
+
+d) JSP Declarative tag
+
+are used to declare member methods and variable of Servlet class.
+JSP declaration starts with <%! and ends with %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

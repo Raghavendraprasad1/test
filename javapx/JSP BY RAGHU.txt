@@ -1,0 +1,36 @@
+Difference between JSP Scriptlet tag and Declaration tag --:
+
+Jsp Scriptlet Tag :
+---------------------------	
+The jsp scriptlet tag can only declare variables not methods.	
+The declaration of scriptlet tag is placed inside the _jspService() method.	
+
+Jsp Declaration Tag :
+-------------------------------
+1.The jsp declaration tag can declare variables as well as methods.
+2.The declaration of jsp declaration tag is placed outside the _jspService() method.
+
+JSP Implicit Objects :--
+--------------------------------
+
+There are 9 jsp implicit objects. These objects are created by the web container
+ that are available to all the jsp pages.
+
+The available implicit objects are out, request, config, session, application etc.
+
+A list of the 9 implicit objects is given below:
+
+Object	                Type
+-----------                    ------------
+out                   -	JspWriter
+request	         -    HttpServletRequest
+response	         -    HttpServletResponse
+config	        -    ServletConfig
+application    -     ServletContext
+session	-           HttpSession
+pageContext	PageContext
+page	          Object
+exception	       Throwable
+
+config :- Generally, it is used to get initialization parameter from the web.xml file.
+https://www.javatpoint.com/config-implicit-object

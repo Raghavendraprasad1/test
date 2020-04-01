@@ -1,0 +1,606 @@
+Java Servlet API - is a web technology for java that is used to
+build web application that run on web server. A web server is a
+software that handles exectution of these web application and 
+also responsible for interaction with web browser. Eg of web
+server apache, apache tomcat, IIS, Nginx, glassfish, and others.
+
+HTTP :- Hyper text Transfer Protocol is used for communication
+between web browser and web server. All web application (server-
+side program) run over HTTP. It is request and response based
+protocol. The client(Web browser) sends a request message to
+web server. The web server, in turn, returns a response message.
+
+Servlet :- is a Java object that generates a response to HTTP
+         request that sent by browser. Servlet runs inside
+         web container (servlet container). This web container
+         is run inside web server. A web container may run
+         multiple web application where each web application 
+         having multiple servlets running inside.
+
+This Servlet API is given in javax.servlet package. A java servlet
+         is just an ordinary java class which implement from
+        Servlet Interface.
+
+
+What happens when a browswer sends HTTP request ?
+
+The web server checks if the request is for a servlet, if it is,
+the request is passed to web container. Web container will then
+find out which servlet the request is for and activate that
+Servlet by calling service() method of that class. The servlet
+process that request and generate a response. The response is
+sent back to web browser.
+
+We create a servlet class by inheriting the Servlet interface
+or any of two child classes (GenericServlet, HttpServlet) of
+Servlet Interface. 
+
+We need to bind URL (Uniform Resource Locator) to servlet class,
+so that with url, web container will decide which servlet to
+activate. URL is bind to Servlet class with help of urlPatterns.
+
+URL :-  http://ipaddress:portnumber/<url_pattern>
+
+         OR
+
+        http://domainname/<url_pattern>
+
+For mapping url to Servlet, there are two ways :-
+
+a) WebServlet annotation in Servlet class.
+
+   @WebServlet(urlPatterns="pattern")
+
+  url patterns :- always start with / (forward slash) and followed
+  by pattern.
+
+  This WebServlet annotation class is under 
+  javax.servlet.annotation package.
+
+b) using web.xml file
+
+After entering an URL with URL patterns, A HTTP request is sent
+by browser to Web Server. Web Server found out this Request is
+for a Servlet, it passes this HTTP request to web container.
+Web container extract URL pattern form Input URL and search for
+match Servlet having same URL Patterns. Web container convert
+HTTP request to ServletRequest object. The same way a 
+ServletResponse object is created and passes these object to
+service method of activated servlet. The body of Servlet Response
+is set by PrintWriter stream. We can get PrintWriter object by
+calling getWriter() method of ServletResponse object.  This
+ServletResponse is sent back to Web Server.  Web Server converts
+this response to HTTP response and sends back to browser. 
+Browser read response message and display response data.
+
+GenericServlet :- is a child clas of Servlet interface and parent
+class of HttpServlet class. Generic Servlet is an abstract class,
+that has only one abstract method which is service(). It is 
+protocol independent servlet that should always override
+service() method to handle client request. The service() method
+accept two arguments ServletRequest object and ServletResponse
+object.
+
+---------------------------------------------------------------------
+
+Web.xml :- it is a deployment descriptor file. This is a file
+  which web container get information about servlet to invoke.
+  This file is used by web container to find servlet class(bind
+  url to Servlet class). It is extended Markup Language (XML) file.
+
+
+<web-app>
+   <servlet>
+      <servlet-name> ...... </servlet-name>
+      <servlet-class> ...... </servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name> ...... </servlet-name>
+      <url-pattern>  ....... </url-pattern>
+   </servlet-mapping>
+</web-app>
+
+
+Some elements are as follows :-
+
+a) <web-app> :- this element represents whole web application.
+
+b) <servlet> :- this element represents a servlet.
+
+c) <servlet-name> :- is a name given to servlet.
+
+d) <servlet-class> :- is a java class of servlet.
+
+e) <servlet-mapping> :- used to map url to servlet.
+
+f) <url-pattern> :- url pattern assign to servlet.
+
+-----------------------------------------------------------------------------------
+
+Servlet Interface :- It is top most parent interface of any
+servlet. It provides 3 life cycle methods that are used to
+intialise the servlet, to service the request and to destroy
+the servlet. It also provides 2 additional non-life cycle methods.
+
+a) init(ServletConfig config)
+   it is life cycle method of servlet that is used to initialse
+   the servlet and it invoked by web container only once after
+   instantiation of Servlet class. An object of ServletConfig is
+   also create by web container for each servlet object. This
+   object is passed to init method by web container.
+
+b) service(ServletRequest req, ServletResponse res)
+   it provide response for incoming request. It is invoked at
+   each HTTP request sent by browser.
+
+c) destroy()
+   it invoked only once  when servlet is clearing out from
+   memory or when web server is shutting down. It indicates that
+   servlet is being destroyed.
+
+d) getServletConfig()
+   returns object of ServletConfig class created by web container
+   for each servlet.
+
+e) getServletInfo()
+   returns a string containing information about servlet such as
+   servet name, servlet version, servlet summary, servlet
+  copyright info etc, declared by programmer.
+
+-----------------------------------------------------------------
+
+HTTP request / response message consists of two parts :-
+
+a) Header :- carries information about request and response 
+   message such as URL, hostname, user-agent, result code, etc.
+
+b) Body :- carries data such as HTML, plain text, form data,
+           file data etc.
+
+--------------------------------------------------------------
+
+HttpServlet :- this class is dedicated to HTTP protocol. 
+  HttpServlet read Http request and determinse if the request is
+  of type GET or POST. It provides http specific methods such
+  as doGet and doPost.
+
+Two common methods for request message :-
+
+a) GET :- request data for specific resource (html,image,file,text)
+
+b) POST :- submit the data to server.
+
+
+GET:- is default request type. It also carries data in URL inside
+      HTTP Request Header. Query String (name-value pair) is used
+      with URL of a GET request.
+
+ex:   GET /login?name=ravi&password=12345
+      Host:
+      User-Agent
+      Accept:
+      Accept-language
+
+GET request send some data to server by appending with URL.
+
+Query String :- is sequence of name and value pair separated by
+               &.
+
+   ?name=value&name2=value2&name3=value3........
+
+Some key points :-
+
+a) it remains in browser history
+b) it can be bookmarked
+c) it has length restriction (URL length limitation)
+d) it should never be used when dealing with sensitive data because
+   data is visible in URL.
+
+-------------------------------------------------------------
+
+to handle get request, doGet() method of HttpServlet class is
+used.
+to handle post request, doPost() method of HttpServlet class is
+used.
+to handle both request (get/post) , service() method of HttpServlet
+ class.
+
+HttpServletRequest :- the purpose of this object is to retrieve
+information about Http request message send by browser.
+
+The data send by browser alongside with HttpRequest is termed as
+paramters. To get paramter's value call getParameter(name) method
+of HttpServletRequest and pass name of parameter. If parameter
+is not exist with given name , null will returned.
+
+
+String value = httpservletrequestobj.getParamter("parameter-name");
+
+HttpServletRespnse :- the purpose of this object is to write
+resposne of Http request. We can set header inforamtion or body
+of response using this object.
+
+Post :- data is send in request body in case of post request.
+        The query string (name-value pair) is carries data inside
+        body of Post request.
+
+
+ex:    POST /login HTTP 1.1   
+       Host:
+       Accept:
+       Accept-language:
+
+       username=ravi&password=123456
+
+Key points :-
+
+a) this request can't be bookmarked
+b) this request have no restriction on length of data
+c) this request don't retain in browser history
+d) secure ( data is not visible in URL)
+e) but littel bit slower in comparison to GET request.
+
+
+----------------------------------------------------------------------------------------
+
+HTTP Request Header :- The request header are name-value pair
+send by browswer along with HTTP request. The request headers
+contains information such as what browswer software is being
+used, what file type the browser is capable of receiving,
+what language the browser understand etc.... In short, a lot of
+metadata about HttpRequest.
+
+To get Headers information call getHeader() method of 
+ServletRequest object & pass name of header key.
+
+String value = requestobject.getHeader("header-key");
+
+To get all headers name, getHeaderNames() method of ServletRequest
+returns an Enumeration object, containing all headers name.
+Enumeration object is capable of iterating header key one by one.
+
+-----------------------------------------------------------------
+
+HTTP Response Body :- carries data such as text, html, image data,
+                     file data, etc......
+
+  TO set response body , PrintWriter is used .
+
+
+ PrintWriter pw = responseobject.getWriter();
+ 
+
+-----------------------------------------------------------------
+
+HTTP Response Header :- carry information about Response message,
+such as date of resonse, type of content , server information,
+length (size) of body.
+
+
+We can set header information using setHeader() method of Http
+response object.
+
+responseobject.setHeader("header-name", "header-value");
+
+-----------------------------------------------------------------
+
+ServletConfig :-
+----------------
+
+A web container creates a ServletConfig object for each servlet
+during instantantiation of Servlet to pass information to servlet.
+This object can be used to get configuration information such
+as parameter names and values from deployment descriptor file
+(web.xml).
+
+<servlet>
+   <servlet-name>.....</servlet-name>
+   <servlet-class>.....</servlet-class>
+   <init-parameter>
+      <param-name>.......</param-name>
+      <param-value>......</param-value>
+   </init-parameter>
+</servlet>
+
+
+We can get ServletConfig object by calling getServletConfig()
+method of Servlet interface.
+
+ServletConfig sc = getServletConfig();
+
+getInitParameter(parameter_name) method is used to get init 
+parameter value given in web.xml file for a respective servlet.
+
+String value = sc.getInitParameter(parameter_name);
+
+-----------------------------------------------------------------
+
+RequestDispatcher :- is a class that is responsible for
+navigation between servlet. This class enables servlet to call
+another servlet and pass request and response information as
+if HTTP request was send by browser.  We can get object of
+RequestDispatcher class by calling getRequestDispatcher() method
+of HttpServletRequest object.
+
+RequestDisptacher rd = 
+         httpservletrequestobj.getRequestDispatcher(URL-PATTERN);
+
+There are two ways to call another servlet :-
+
+a) forward method(request, response)
+b) include method(request, response)
+
+forward() method is intended for use in forwarding request, and
+final response will be of activated(another) servlet.
+
+include() method merges the response written by calling servlet
+and activated servlet. and final merge response will be send back 
+to browser.
+
+----------------------------------------------------------------
+ Redirecting to a Different URL
+ -------------------------------
+
+  We can redirect to browser to a different URL from our servlet.
+  We can't send any data back to browser when redirecting. Call
+  sendRedirect("url") method of response object.
+
+   responseobj.sendRedirect("url");
+
+RequestDispatcher allows us to do server side forward/include
+whereas sendRedirect() does a client side (browser) redirect.
+RequestDispatcher transfer request to other resource within same
+server whereas sendRedirect() request is transfer to another
+resource of same server or another server.
+
+---------------------------------------------------------------
+
+ServletContext :-
+
+A web container creates a ServletContext object per web application.
+during deployment of web application.
+This object can be used to get configuration information such
+as parameter names and values from deployment descriptor file
+(web.xml). These parameters can be read within any servlet in
+our web application.
+
+<web-app>
+   <context-parameter>
+      <param-name>.......</param-name>
+      <param-value>......</param-value>
+   </context-parameter>
+</web-app>
+
+Context intialization parameter are parameter name and value pairs
+that we can specify in deployment descriptof file. These parameters
+will be accessible to all servlets in web application.
+
+When we deploy web application, web container intialized the
+ServletContext object with these paramters.
+
+We can get ServletContext object by calling getServletContext()
+method of GenericServlet.
+
+ServletContext sc = getServletContext();
+
+getInitParameter(parameter_name) method is used to get context 
+parameter value given in web.xml file..
+
+String value = sc.getInitParameter(parameter_name);
+
+----------------------------------------------------------------
+
+JavaMail API :- provides a protocol indepent framework to send and
+                receive mail. It provide standard packages for 
+                reading, composing and sending e-mail.
+
+SMTP :- Simple Mail Transfer Protocol. It is a protocol to deliver
+        email. This protocol communicate with email server and
+        send email to other email server.
+
+Them main package is javax.mail inside JavaMail API.
+
+Steps for sending email :-
+
+1> create a Connection with email server (private or public). 
+   Public email server are gmail, yahoomail, hotmail etc.....
+   Email Server hostname and port number is required to create 
+   connection.
+
+2> Login into server by providing email id and password.
+
+3> Compose an email using MimeMessage class.
+
+4> Send email using Transport class.
+   
+--------------------------------------------------------------
+
+Exception Handling in Servlets
+-------------------------------
+
+Since browser understand only HTML, when our application throw
+exception, web container processes the exception and generate a
+HTML response. Different Web server provide different error
+HTML response.
+
+The problem with this response is that it's of no value to user.
+Also its' showing application classes and server details to user
+that makes no sense to user and it's not good from security point
+of view.
+
+Servlet API provides support for Exception and Error Handler 
+servlets that we can configure in deployment descriptor file.
+
+The whole purpose of these servlets are to handle the Exception or
+Error raised by application and send useful HTML response to 
+user. We can provide link to application home page or some
+details to let user known what went wrong.
+
+To declare an error-page, In web.xml file use error-page element
+and each error-page element should have either error-code (HTTP
+status code) or exception-type element. We define exception
+handlier servlet or html page in location element.
+
+
+<error-page>
+   <error-code>404</error-code>
+   <location>/error.html</location>
+</error-page>
+
+ OR
+
+<error-page>
+  <exception-type>......</exception-type>
+  <location>/ErrorServlet</location>
+</error-page>
+
+
+AutoRefresh in Servlet:-
+-----------------------
+
+Consider a web page which is displaying live game score or stock
+market stuatus or currency exchange rate. For all such type of
+pages, we need to refresh our web page regulary using refresh
+or reload button with our browser.
+
+Java Servlet makes this job easy by providign a mechanism where
+we cam make a webpage in such a way that it would automatically
+refresh after a given interval.
+
+The simplest way of refreshing a web page is using setIntHeader()
+method of response object.
+
+responseobject.setIntHeader("headername",integervalue);
+
+So header name will be refresh and integer value is a specifiec
+time interval.
+
+responseobject.setIntHeader("refresh",timeinterval);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

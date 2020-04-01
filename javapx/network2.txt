@@ -1,0 +1,36 @@
+HTTP PROTOCOL :
+------------------
+>> is a rules for commu'n b/w browser n web server. it stands for hyper text 
+transfer protocol.
+>> it is request n response protocol. first,  browser send a request msg 
+to web server prgrm.  web server read this msg n generate a response msg
+contains data request by web browser ,this msg send back to browser .
+
+COMMU'N WITH WEB SERVER : > work over http protocol
+---------------------------------
+>> we need to create a client prgrm. this client prgrm is known as gttp client .
+stepos>>
+1) first instantiate url class and assign URL in its constuctor .it represent url to 
+connect. 
+ URL u =new URL("url_name");
+ 
+2) create connection b/w client prgrm n web server by calling openConnection()
+method of url class. this method return httpurl connection object.
+http url connection represent connection socket that is used to read n write data.
+
+3) call getInput stream method ,this send a requst msg to server. n web server generate
+ response msg n this msg is read by i/p streeam.
+Inp/t Stream iis =getI/pStream(); 
+
+RUNTIME CLASS :
+-------------------
+>>  is a java class under java.lang package. it is used to start a process/prgrm
+or to execute a cman in OS.
+>>to get a runtime object call static method getRuntime() of runtime class.
+  Runtime rt=new Runtime();
+>> to start a program or to execute a command , call to exec(cmd) method of 
+runtime class. it return the process object that represent the running process 
+stated by exec() method.
+                process p=rt.exec(cmd);
+ >> we can get o/p of this process by reading i/p stream of process object.
+             InputStream is=p.getInputstream();

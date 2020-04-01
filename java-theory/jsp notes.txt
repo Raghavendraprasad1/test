@@ -1,0 +1,20 @@
+JSP Implicit Object :-  these objects are created by Web container while translating JSP page
+to servlet source . We can use implicit objects directly into JSP tags.
+
+a) request :- object of HttpServletRequest class. It is used to get paramters information send by
+                   browsers, HTTP request header information.
+
+b) response :- object of HttpServletResponse class. It is used to set Header information and body
+                    of response that sent to browser.
+
+c) out :- object of JSPWriter class. It is used to write body of HttpServletResponse.
+
+d) config :- object of ServletConfig interface. It is get parameters information from web.xml file.
+
+e) application :- object of ServletContext interface. It is get context parameters information from
+                           web.xml file.
+
+f) exception :- object of Throwable class. It is used to provide exception details in JSP error pages.
+
+g) session :- object HttpSession class. It is used to get and store  information about user's session.
+

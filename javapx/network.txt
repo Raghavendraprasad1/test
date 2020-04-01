@@ -1,0 +1,29 @@
+NETWORK PROGRAMMING :
+-----------------------------
+NETWORK :
+-----------
+>> n/w is a grp of interconnected comp. n periferals that is capable of sharing s/w
+ h/w resources b/w users.
+>> the comp. participated in n/w commu'n are classified as host or end devices.
+>> the s/w installed on these comp. decided the role of comp. play.
+
+SERVER :
+---------
+>> server are the host that hav s/w installed that enable them to provide inform'n lyk email or web pages to other host on n/w.
+>> each service require separate server  s/w. 
+
+CLIENT :
+--------
+>> client are host having s/w installed that enable them to request and display inform'n 
+obtain by server.
+ex: web browser is a client s/w.
+
+IP-ADDRESS :
+-------------
+>>internet protocol address is a identity of a comp. on n/w.
+>> IP address is automatically assigned by DHCP server(dynamic host control protocol).
+
+
+
+
+ 

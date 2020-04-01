@@ -1,0 +1,49 @@
+IO API provide two approach to read and write data.
+1)byte stream= flow of 8 bit data.
+2)character stream= flow of char data.
+
+>>Byte oriented stream :
+A)FileInputStream>is useful to read data from a file in the form of sequence of bytes or byte oriented data such as image data, audio,video etc. 
+ex:
+FileInputStream obj=new FileInputStream("file name");
+
+>>to read file there is three methods.
+1) read()- it read single byte and return its integer form.if no byte is 
+availlable then return -1.
+2) read(byte[])= this method read multiple bytes from file nd store them 
+into a byte array. the no. of byte read is depend on size of array.
+ex:
+byte[] b=new byte[3];
+b.read()
+3) read(byte[].,start index,offset)=this method read multiple bytes from file and 
+store them into a byte array from a given index. the no. of byte is to read is depend 
+ on offset.
+ex: 
+byte[] b=new byte[size] ;
+obj.read(b,index,offset).
+
+B) bufferedinput stream ==  used to read byte data from buffer memory.
+buffer is a temporary memory that stores byte fetched from file i/p stream .
+it is most efficient technik to read data. default buffer size is 8 kb.
+
+>>two ways to create instance.
+1) BufferedInputStream b=new BufferInputStream(i/p stream)
+                             OR
+2) BufferedInputStream b=new BufferInputStream(i/p stream,buffersize)
+>>it create a chain with file/stream.
+
+
+------------------------------------------------------------------------------------------------
+O/pStream= is a topmost abstract class for byte oriented o/p stream .it has many
+child class to data write. 
+ex:
+Fileo/pStream b=new Fileo/pStream ("file name");
+>> if file doesnt exist ,then it wll create a new file automatically.
+
+>>To write byte data .three methods.
+1) write(byte)=it write byte to a file.
+2) write(byte[])=it write multiple byte to a file.
+3) write (byte[],index,offset)=in this no. of bytes  written is depend on offset.
+
+>>it is compulsory to call close() method after writing bytes,if fail then bytes 
+wll nt reflect on file.
